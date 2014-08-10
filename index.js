@@ -1,12 +1,17 @@
 var url = require('url')
   , fs = require('fs')
   , jsonlint = require('json-lint')
+  , path = require('path')
   , tv4 = require('tv4')
   , request = require('request')  
   ;
 
+var schemasPath = path.join(__dirname, 'schemas');
+
 var schemas = {
-  'dataPackage': JSON.parse(fs.readFileSync('schemas/data-package.json'))
+  'dataPackage': JSON.parse(fs.readFileSync(
+      path.join(schemasPath, 'data-package.json')
+    ))
 };
 
 exports.validate = function(raw) {
