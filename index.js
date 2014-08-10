@@ -1,5 +1,6 @@
 var url = require('url')
   , fs = require('fs')
+  , jsonlint = require('json-lint')
   , tv4 = require('tv4')
   , request = require('request')  
   ;
@@ -11,21 +12,22 @@ var schemas = {
 exports.validate = function(raw) {
   var json = raw;
   if (typeof(json) == 'string') {
-    try {
-      var json = JSON.parse(raw);
-    } catch(e) {
-      return { valid: false, errors: [{message: 'Invalid JSON'}]};
+    var lint = jsonlint(json);
+    if (lint.error) {
+      return {
+        valid: false,
+        errors: [
+          {
+            message: 'Invalid JSON: ' + lint.error,
+            line: lint.line,
+            character: lint.character
+          }
+        ]
+      };
     }
+    json = JSON.parse(raw);
   }
-  var required = [ 'name', 'resources' ];
-  var recommended = [
-    'title',
-    'licenses',
-    'datapackage_version',
-    'description',
-    'sources',
-    'keywords'
-  ];
+
   var report = tv4.validateMultiple(json, schemas.dataPackage);
   var errors = report.errors;
   if (errors.length === 0) {

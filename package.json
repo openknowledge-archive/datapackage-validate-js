@@ -23,6 +23,7 @@
   "main": "./index",
   "dependencies": {
       "tv4": ""
+    , "json-lint": ""
     , "request": ""
   },
   "devDependencies": {
