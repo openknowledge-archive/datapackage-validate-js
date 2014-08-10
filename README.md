@@ -80,3 +80,8 @@ validator.validateUrl(url, callback)
 
 Note callback just has a single argument which is the validation result.
 
+# Changelog
+
+* v0.2.0: #1, #2, #4 (jsonlint, much better schema validation using official schemas)
+* v0.1.0: first working release
+
