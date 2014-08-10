@@ -24,6 +24,7 @@ exports.validate = function(raw) {
         errors: [
           {
             message: 'Invalid JSON: ' + lint.error,
+            type: 'json',
             line: lint.line,
             character: lint.character
           }
@@ -34,7 +35,11 @@ exports.validate = function(raw) {
   }
 
   var report = tv4.validateMultiple(json, schemas.dataPackage);
-  var errors = report.errors;
+  var errors = report.errors.map(function(error) {
+    delete error.stack;
+    error.type = 'schema';
+    return error;
+  });
   if (errors.length === 0) {
     return {
       valid: true,
