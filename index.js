@@ -1,38 +1,21 @@
-var JSV = require("JSV").JSV
-  , url = require('url')
+var url = require('url')
+  , fs = require('fs')
+  , tv4 = require('tv4')
   , request = require('request')  
   ;
 
-var dpSchema = {
-  "title": "Data Package",
-  "type" : "object",
-  "properties": {
-    name: {
-      type: 'string',
-      required: true
-    },
-    title: {
-      type: 'string'
-    },
-    sources: {
-      type: 'array'
-    },
-    licenses: {
-      type: 'array'
-    },
-    resources: {
-      type: 'array',
-      required: true
-    } 
-  }
+var schemas = {
+  'dataPackage': JSON.parse(fs.readFileSync('schemas/data-package.json'))
 };
 
 exports.validate = function(raw) {
-  var env = JSV.createEnvironment();
-  try {
-    var json = JSON.parse(raw);
-  } catch(e) {
-    return { valid: false, errors: [{message: 'Invalid JSON'}]};
+  var json = raw;
+  if (typeof(json) == 'string') {
+    try {
+      var json = JSON.parse(raw);
+    } catch(e) {
+      return { valid: false, errors: [{message: 'Invalid JSON'}]};
+    }
   }
   var required = [ 'name', 'resources' ];
   var recommended = [
@@ -43,7 +26,7 @@ exports.validate = function(raw) {
     'sources',
     'keywords'
   ];
-  var report = env.validate(json, dpSchema);
+  var report = tv4.validateMultiple(json, schemas.dataPackage);
   var errors = report.errors;
   if (errors.length === 0) {
     return {
