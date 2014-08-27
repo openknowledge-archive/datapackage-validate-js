@@ -1,7 +1,7 @@
 {
   "name": "datapackage-validate",
   "description": "Validate Data Packages",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "license": "MIT",
   "author": {
     "name": "Rufus Pollock",
