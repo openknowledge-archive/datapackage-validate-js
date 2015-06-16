@@ -39,10 +39,11 @@ describe('validate schema', function() {
         "path": "data/data.csv"
       }]
     };
-    var out = tools.validate(data);
-    // console.log(JSON.stringify(out, null, 2));
-    assert.equal(out.valid, true);
-    assert.equal(out.errors.length, 0);
+    tools.validate(data).then(function(O) {
+      // console.log(JSON.stringify(out, null, 2));
+      assert.equal(O.valid, true);
+      assert.equal(O.errors.length, 0);
+    });
   });
 });
 
