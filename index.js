@@ -6,6 +6,7 @@ var url = require('url')
   , request = require('request')  
   , Promise = require('promise-polyfill')
   , _ = require('underscore')
+  , registry = require('datapackage-registry')
   ;
 
 exports.validate = function(raw, schema) {
@@ -30,8 +31,33 @@ exports.validate = function(raw, schema) {
 
   // For consistency reasons always return Promise
   return new Promise(function(RS, RJ) {
-    if(_.isObject(schema) && !_.isArray(schema) && !_.isFunction(schema))
+    if(_.isObject(schema) && !_.isArray(schema) && !_.isFunction(schema)) {
       RS(tv4.validateMultiple(json, schema));
+      return null;
+    }
+
+    // If schema passed as id — get registry schema by id and validate against it
+    registry.get().then(function(R) {
+      var profile = _.findWhere({id: schema}, R);
+
+      if(!profile) {
+        RJ('No profile found with id ' + schema);
+        return null;
+      }
+
+      request(profile.schema, function(E, R, B) {
+        if(E) {
+          RJ('Failed loading schema from ' + profile.schema);
+          return null;
+        }
+
+        try {
+          RS(tv4.validateMultiple(json, JSON.parse(B)));
+        } catch(E) {
+          RJ('Failed parsing schema json from ' + profile.schema);
+        }
+      });
+    }, function() { RJ('Registry request failed') });
   }).then(function(R) {
     var errors = R.errors.map(function(error) {
     delete error.stack;
