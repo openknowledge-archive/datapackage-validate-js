@@ -11,6 +11,10 @@ var url = require('url')
 
 exports.validate = function(raw, schema) {
   var json = raw;
+
+  // Default schema id
+  var schemaID = schema || 'base';
+
   if (typeof(json) == 'string') {
     var lint = jsonlint(json);
     if (lint.error) {
@@ -38,10 +42,10 @@ exports.validate = function(raw, schema) {
 
     // If schema passed as id — get registry schema by id and validate against it
     registry.get().then(function(R) {
-      var profile = _.findWhere({id: schema}, R);
+      var profile = _.findWhere({id: schemaID}, R);
 
       if(!profile) {
-        RJ('No profile found with id ' + schema);
+        RJ('No profile found with id ' + schemaID);
         return null;
       }
 
