@@ -4,17 +4,11 @@ var url = require('url')
   , path = require('path')
   , tv4 = require('tv4')
   , request = require('request')  
+  , Promise = require('promise-polyfill')
+  , _ = require('underscore')
   ;
 
-var schemasPath = path.join(__dirname, 'schemas');
-
-var schemas = {
-  'dataPackage': JSON.parse(fs.readFileSync(
-      path.join(schemasPath, 'data-package.json')
-    ))
-};
-
-exports.validate = function(raw) {
+exports.validate = function(raw, schema) {
   var json = raw;
   if (typeof(json) == 'string') {
     var lint = jsonlint(json);
@@ -34,8 +28,12 @@ exports.validate = function(raw) {
     json = JSON.parse(raw);
   }
 
-  var report = tv4.validateMultiple(json, schemas.dataPackage);
-  var errors = report.errors.map(function(error) {
+  // For consistency reasons always return Promise
+  return new Promise(function(RS, RJ) {
+    if(_.isObject(schema) && !_.isArray(schema) && !_.isFunction(schema))
+      RS(tv4.validateMultiple(json, schema));
+  }).then(function(R) {
+    var errors = R.errors.map(function(error) {
     delete error.stack;
     error.type = 'schema';
     return error;
@@ -51,6 +49,7 @@ exports.validate = function(raw) {
       errors: errors
     };
   }
+  });
 }
 
 exports.validateUrl = function(dpurl, callback) {

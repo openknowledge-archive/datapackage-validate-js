@@ -22,9 +22,11 @@
   ],
   "main": "./index",
   "dependencies": {
-      "tv4": ""
-    , "json-lint": ""
-    , "request": ""
+    "json-lint": "",
+    "promise-polyfill": "^2.0.2",
+    "request": "",
+    "tv4": "",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "mocha": ""
