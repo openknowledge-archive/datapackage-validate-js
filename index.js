@@ -43,7 +43,7 @@ exports.validate = function(raw, schema) {
 
     // If schema passed as id — get registry schema by id and validate against it
     registry.get().then(function(R) {
-      var profile = _.findWhere({id: schemaID}, R);
+      var profile = _.findWhere(R, {id: schemaID});
 
       if(!profile) {
         RJ('No profile found with id ' + schemaID);
@@ -101,7 +101,7 @@ exports.validateUrl = function(dpurl, callback) {
         }]
       });
     } else {
-      callback(exports.validate(body));
+      exports.validate(body).then(function(O) { callback(O) });
     }
   });
 }
