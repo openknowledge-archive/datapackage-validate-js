@@ -22,6 +22,7 @@
   ],
   "main": "./index",
   "dependencies": {
+    "datapackage-registry": "^0.1.0",
     "json-lint": "",
     "promise-polyfill": "^2.0.2",
     "request": "",

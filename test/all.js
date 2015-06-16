@@ -5,29 +5,32 @@ var assert = require('assert')
 
 describe('validate JSON', function() {
   it('bad JSON', function() {
-    var out = tools.validate('{"xyz"');
-    assert.equal(out.errors.length, 1);
-    assert.equal(out.errors[0].message, "Invalid JSON: EOF Error, expecting closing '}'.");
+    tools.validate('{"xyz"', {}).then(function(O) {
+      assert.equal(O.errors.length, 1);
+      assert.equal(O.errors[0].message, "Invalid JSON: EOF Error, expecting closing '}'.");
+    });
   });
 
   it('bad JSON subtler', function() {
-    var out = tools.validate('{\n \
+    tools.validate('{\n \
   "name": "xyz"\n\
   "title": "xxx"\n\
-    ');
-    assert.equal(out.errors.length, 1);
-    assert.equal(out.errors[0].line, 3);
-    assert.equal(out.errors[0].character, 3);
+    ', {}).then(function(O) {
+      assert.equal(O.errors.length, 1);
+      assert.equal(O.errors[0].line, 3);
+      assert.equal(O.errors[0].character, 3);
+    });
   });
 });
 
 describe('validate schema', function() {
   it('invalid for schema', function() {
-    var out = tools.validate('["xyz"]');
-    // console.log(JSON.stringify(out, null, 2));
-    assert.equal(out.valid, false);
-    assert.equal(out.errors.length, 1);
-    assert.equal(out.errors[0].message, 'invalid type: array (expected object)')
+    tools.validate('["xyz"]', {valid: 'schema'}).then(function(O) {
+      // console.log(JSON.stringify(out, null, 2));
+      assert.equal(O.valid, false);
+      assert.equal(O.errors.length, 1);
+      assert.equal(O.errors[0].message, 'invalid type: array (expected object)')
+    });
   });
   it('good datapackage.json', function() {
     var data = {

@@ -18,7 +18,7 @@ exports.validate = function(raw, schema) {
   if (typeof(json) == 'string') {
     var lint = jsonlint(json);
     if (lint.error) {
-      return {
+      return new Promise(function() { RS({
         valid: false,
         errors: [
           {
@@ -28,13 +28,14 @@ exports.validate = function(raw, schema) {
             character: lint.character
           }
         ]
-      };
+      
+      }); })
     }
     json = JSON.parse(raw);
   }
 
   // For consistency reasons always return Promise
-  return new Promise(function(RS, RJ) {
+  return (new Promise(function(RS, RJ) {
     if(_.isObject(schema) && !_.isArray(schema) && !_.isFunction(schema)) {
       RS(tv4.validateMultiple(json, schema));
       return null;
@@ -62,7 +63,7 @@ exports.validate = function(raw, schema) {
         }
       });
     }, function() { RJ('Registry request failed') });
-  }).then(function(R) {
+  })).then(function(R) {
     var errors = R.errors.map(function(error) {
     delete error.stack;
     error.type = 'schema';
