@@ -83,7 +83,7 @@ exports.validate = function(raw, schema) {
   });
 }
 
-exports.validateUrl = function(dpurl, callback) {
+exports.validateUrl = function(dpurl, callback, schema) {
   request(dpurl, function(err, response, body) {
     if (err) {
       callback({
@@ -101,7 +101,7 @@ exports.validateUrl = function(dpurl, callback) {
         }]
       });
     } else {
-      exports.validate(body).then(function(O) { callback(O) });
+      exports.validate(body, schema).then(function(O) { callback(O) });
     }
   });
 }
