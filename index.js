@@ -18,7 +18,7 @@ exports.validate = function(raw, schema) {
   if (typeof(json) == 'string') {
     var lint = jsonlint(json);
     if (lint.error) {
-      return new Promise(function() { RS({
+      return new Promise(function(RS, RJ) { RS({
         valid: false,
         errors: [
           {
