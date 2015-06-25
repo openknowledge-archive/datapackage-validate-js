@@ -22,9 +22,9 @@
   ],
   "main": "./index",
   "dependencies": {
+    "bluebird": "^2.9.30",
     "datapackage-registry": "^0.1.0",
     "json-lint": "",
-    "promise-polyfill": "^2.0.2",
     "request": "",
     "tv4": "",
     "underscore": "^1.8.3"

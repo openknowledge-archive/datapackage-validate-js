@@ -4,7 +4,7 @@ var url = require('url')
   , path = require('path')
   , tv4 = require('tv4')
   , request = require('request')  
-  , Promise = require('promise-polyfill')
+  , Promise = require('bluebird')
   , _ = require('underscore')
   , registry = require('datapackage-registry')
   ;
