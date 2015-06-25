@@ -23,18 +23,20 @@ var validator = require('datapackage-validate');
 
 ## validate
 
-Validate the provided DataPackage.json file
+Validate the provided object or string as a Data Package.
 
 ```
-validator.validate(string)
+validator.validate(raw, schema)
 ```
 
-* `string`: datapackage.json string or object to validate (note method will
+* `raw`: datapackage.json string or object to validate (note method will
   take care of parsing the string and checking it is valid JSON if it is not
   parsed already)
+* `schema`: A schema to validate `raw` against, or, a string that is the unique identifier for a schema in the [Data Package Registry](https://github.com/dataprotocols/registry), which is used to retrieve the matching schema
 
-Note the method is synchronous and returns a JS object with following
-structure:
+
+Note the method is asynchronous and returns a Promise (implemented with [bluebird](https://www.npmjs.com/package/bluebird)). 
+The Promise resolves with following structure:
 
 ```
 {
@@ -65,23 +67,13 @@ structure:
 };
 ```
 
-
-## validateUrl
-
-Convenience method to validate a DataPackage.json file at a URL. Uses
-validate but also checks file is accessible return errors in correct
-format.
-
-```
-validator.validateUrl(url, callback)
-```
-
-* `url`: path to DataPackage.json
-
-Note callback just has a single argument which is the validation result.
-
 # Changelog
 
+* v0.3.0: 
+  * Adds support for any Profile in the [Data Package Registry](https://github.com/dataprotocols/registry)
+  * API is now async using bluebird Promises
+  * Removes hardcoded schemas
+  * Removes validateUrl
 * v0.2.0: #1, #2, #4 (jsonlint, much better schema validation using official schemas)
 * v0.1.0: first working release
 
