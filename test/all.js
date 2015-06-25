@@ -50,24 +50,3 @@ describe('validate schema', function() {
     });
   });
 });
-
-describe('validate remote data package', function() {
-  var sourceUrl = 'https://raw.github.com/datasets/gold-prices/master/datapackage.json'; 
-
-  it('remote datapackage.json ok', function(done) {
-    this.timeout(10000);
-    tools.validateUrl(sourceUrl, function(out) {
-      assert.equal(out.valid, true);
-      done();
-    });
-  });
-  it('bad remote datapackage.json not ok', function(done) {
-    this.timeout(4000);
-    tools.validateUrl(sourceUrl + 'xxx', function(out) {
-      assert.equal(out.valid, false);
-      assert.equal(out.errors[0].message, 'Error loading the datapackage.json file. HTTP Error code: 404');
-      done();
-    });
-  });
-});
-

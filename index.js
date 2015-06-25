@@ -83,28 +83,3 @@ exports.validate = function(raw, schema) {
     }
   });
 }
-
-exports.validateUrl = function(dpurl, callback, schema) {
-  request(dpurl, function(err, response, body) {
-    if (err) {
-      callback({
-        valid: false,
-        errors: [{
-          message: err.toString()
-        }]
-      });
-    }
-    else if (response.statusCode !== 200) {
-      callback({
-        valid: false,
-        errors: [{
-          message: 'Error loading the datapackage.json file. HTTP Error code: ' + response.statusCode
-        }]
-      });
-    } else {
-      exports.validate(body, schema).then(function(O) { callback(O) });
-    }
-  });
-}
-
-
