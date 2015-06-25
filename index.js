@@ -65,21 +65,22 @@ exports.validate = function(raw, schema) {
     }, function() { RJ('Registry request failed') });
   })).then(function(R) {
     var errors = R.errors.map(function(error) {
-    delete error.stack;
-    error.type = 'schema';
-    return error;
-  });
-  if (errors.length === 0) {
-    return {
-      valid: true,
-      errors: []
-    };
-  } else {
-    return {
-      valid: false,
-      errors: errors
-    };
-  }
+      delete error.stack;
+      error.type = 'schema';
+      return error;
+    });
+
+    if (errors.length === 0) {
+      return {
+        valid: true,
+        errors: []
+      };
+    } else {
+      return {
+        valid: false,
+        errors: errors
+      };
+    }
   });
 }
 
