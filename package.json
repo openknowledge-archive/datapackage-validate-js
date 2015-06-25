@@ -22,9 +22,12 @@
   ],
   "main": "./index",
   "dependencies": {
-      "tv4": ""
-    , "json-lint": ""
-    , "request": ""
+    "bluebird": "^2.9.30",
+    "datapackage-registry": "^0.1.0",
+    "json-lint": "",
+    "request": "",
+    "tv4": "",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "mocha": ""
