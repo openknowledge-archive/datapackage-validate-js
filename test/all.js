@@ -34,6 +34,7 @@ describe('validate schema', function() {
       done();
     });
   });
+
   it('good datapackage.json', function(done) {
     var data = {
       "name": "abc",
@@ -41,7 +42,10 @@ describe('validate schema', function() {
         "path": "data/data.csv"
       }]
     };
+
+
     this.timeout(10000);
+
     tools.validate(data).then(function(O) {
       // console.log(JSON.stringify(out, null, 2));
       assert.equal(O.valid, true);
