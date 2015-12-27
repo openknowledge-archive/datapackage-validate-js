@@ -1,12 +1,30 @@
 {
   "name": "datapackage-validate",
   "description": "Validate Data Packages",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "author": {
-    "name": "Rufus Pollock",
-    "email": "rufus.pollock@okfn.org"
+    "name": "Open Knowledge",
+    "email": "info@okfn.org",
+    "url": "https://okfn.org/"
   },
+  "contributors": [
+    {
+      "name": "Rufus Pollock",
+      "email": "rufus.pollock@okfn.org",
+      "url": "http://rufuspollock.org/"
+    },
+    {
+      "name": "Paul Walsh",
+      "email": "paulywalsh@gmail.com",
+      "url": "http://pwalsh.me/"
+    },
+    {
+      "name": "Artem Rudenko",
+      "email": "gvidon@ottofeller.com",
+      "url": "http://ottofeller.com/"
+    }
+  ],
   "scripts": {
     "test": "mocha test"
   },
