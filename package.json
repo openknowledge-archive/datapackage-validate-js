@@ -41,7 +41,7 @@
   "main": "./index",
   "dependencies": {
     "bluebird": "^2.9.30",
-    "datapackage-registry": "^0.1.0",
+    "datapackage-registry": "^0.2.1",
     "json-lint": "",
     "request": "",
     "tv4": "",
