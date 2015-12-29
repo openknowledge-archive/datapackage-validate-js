@@ -1,7 +1,7 @@
 {
   "name": "datapackage-validate",
   "description": "Validate Data Packages",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "license": "MIT",
   "author": {
     "name": "Open Knowledge",
@@ -40,12 +40,12 @@
   ],
   "main": "./index",
   "dependencies": {
-    "bluebird": "^2.9.30",
-    "datapackage-registry": "^0.2.1",
-    "json-lint": "",
-    "request": "",
-    "tv4": "",
-    "underscore": "^1.8.3"
+    "bluebird": "3.1.1",
+    "datapackage-registry": "0.2.1",
+    "json-lint": "0.1.0",
+    "request": "2.67.0",
+    "tv4": "1.2.7",
+    "underscore": "1.8.3"
   },
   "devDependencies": {
     "mocha": ""
